@@ -12,6 +12,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-obsession'
+Plugin 'othree/yajs.vim'
+Plugin 'keith/swift.vim'
 
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
@@ -24,11 +26,13 @@ filetype plugin indent on    " required
 set autoread
 set number
 set ignorecase
+set nohlsearch
+set noerrorbells visualbell t_vb=
+set expandtab
 set smartcase
 set showmatch
 set mat=2
 
-set expandtab
 set smarttab
 
 set autoindent

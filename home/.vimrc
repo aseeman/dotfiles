@@ -14,6 +14,13 @@ Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-obsession'
 Plugin 'othree/yajs.vim'
 Plugin 'keith/swift.vim'
+Plugin 'iCyMind/NeoSolarized'
+Plugin 'othree/es.next.syntax.vim'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'tpope/vim-dadbod'
+Plugin 'pangloss/vim-javascript'
+Plugin 'tpope/vim-jdaddy'
+Plugin 'maxmellon/vim-jsx-pretty'
 
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
@@ -39,6 +46,8 @@ set autoindent
 set tabstop=4 |
 set softtabstop=4 |
 set shiftwidth=4 |
+set termguicolors
+colorscheme NeoSolarized
 
 au BufNewFile,BufRead *.py
     \ set textwidth=79 |

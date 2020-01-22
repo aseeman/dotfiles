@@ -9,18 +9,15 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'tpope/vim-fugitive'
-Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-obsession'
-Plugin 'othree/yajs.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'mxw/vim-jsx'
 Plugin 'keith/swift.vim'
 Plugin 'iCyMind/NeoSolarized'
-Plugin 'othree/es.next.syntax.vim'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'tpope/vim-dadbod'
-Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-jdaddy'
-Plugin 'maxmellon/vim-jsx-pretty'
+Plugin 'tpope/vim-dadbod'
 
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
@@ -30,8 +27,11 @@ Plugin 'maxmellon/vim-jsx-pretty'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+syntax enable
+
 set autoread
 set number
+set relativenumber
 set ignorecase
 set nohlsearch
 set noerrorbells visualbell t_vb=
@@ -39,6 +39,11 @@ set expandtab
 set smartcase
 set showmatch
 set mat=2
+set tabpagemax=20
+set bs=2
+set splitbelow
+set splitright
+set ruler
 
 set smarttab
 
@@ -47,14 +52,17 @@ set tabstop=4 |
 set softtabstop=4 |
 set shiftwidth=4 |
 set termguicolors
+
 colorscheme NeoSolarized
+set background=dark
+
+setlocal foldmethod=syntax
 
 au BufNewFile,BufRead *.py
     \ set textwidth=79 |
     \ set fileformat=unix
 
-let g:ackprg = 'ag --vimgrep --smart-case'                                                   
-cnoreabbrev ag Ack
-cnoreabbrev aG Ack
-cnoreabbrev Ag Ack
-cnoreabbrev AG Ack
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+
+set undofile
+set undodir=~/.vim/undodir

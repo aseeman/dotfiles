@@ -1,1 +1,1 @@
-alias ocrolusvpnconnect='sudo openvpn --config /etc/openvpn/ocrolus-linux.conf' 
+alias ocrolusvpnconnect='sudo openvpn --config /home/aseeman/client.ovpn --auth-user-pass --auth-retry interact' 

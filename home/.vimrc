@@ -18,6 +18,7 @@ Plugin 'keith/swift.vim'
 Plugin 'iCyMind/NeoSolarized'
 Plugin 'tpope/vim-jdaddy'
 Plugin 'tpope/vim-dadbod'
+Plugin 'sophacles/vim-bundle-mako'
 
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
@@ -39,7 +40,7 @@ set expandtab
 set smartcase
 set showmatch
 set mat=2
-set tabpagemax=20
+set tabpagemax=40
 set bs=2
 set splitbelow
 set splitright

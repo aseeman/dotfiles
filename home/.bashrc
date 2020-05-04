@@ -130,3 +130,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias filter_jira_tickets="sed -n 's/.*\(\[.*\]\).*/\1/p' | sort -u"
+alias get_commits_to_revert="sed 's/\[\(.*\)].*$/\\[\1\\]/g' | tr '\n' '|' | head -c -1 | sed 's/|/\\|/g' | xargs -t0 -I {} git log --pretty=format:"%h" --cherry $COMPARE_VERSION...master --grep={}"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/aseeman/google-cloud-sdk/path.bash.inc' ]; then . '/home/aseeman/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/aseeman/google-cloud-sdk/completion.bash.inc' ]; then . '/home/aseeman/google-cloud-sdk/completion.bash.inc'; fi

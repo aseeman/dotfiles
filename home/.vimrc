@@ -19,6 +19,7 @@ Plugin 'iCyMind/NeoSolarized'
 Plugin 'tpope/vim-jdaddy'
 Plugin 'tpope/vim-dadbod'
 Plugin 'sophacles/vim-bundle-mako'
+Plugin 'peitalin/vim-jsx-typescript'
 
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)

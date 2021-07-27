@@ -119,21 +119,60 @@ fi
 
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/OcrolusWork
-source /usr/local/bin/virtualenvwrapper.sh
-export JAVA_HOME=/home/aseeman/OcrolusWork/jre1.8.0_101/
-export MTURK_CMD_HOME=/home/aseeman/OcrolusWork/aws-mturk-clt-1.3.1/
+source $HOME/.local/bin/virtualenvwrapper.sh
+export JAVA_HOME=$HOME/.jdks/openjdk-14.0.1
+export MTURK_CMD_HOME=$HOME/OcrolusWork/aws-mturk-clt-1.3.1/
 
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+
+alias filter_jira_tickets="sed -n 's/.*\(\[.*\]\).*/\1/p' | sort -u"
+alias get_commits_to_revert="sed 's/\[\(.*\)].*$/\\[\1\\]/g' | tr '\n' '|' | head -c -1 | sed 's/|/\\|/g' | xargs -t0 -I {} git log --pretty=format:%h --cherry $COMPARE_VERSION...master --grep={}"
+
+export PATH=$HOME/local/bin:$HOME/.local/bin:$HOME/Downloads/sonar-scanner-4.5.0.2216-linux/bin:$PATH
+export LD_LIBRARY_PATH=$HOME/local/lib:$LD_LIBRARY_PATH
+export MANPATH=$HOME/local/share/man:$MANPATH
+export PYTHONPATH=$HOME/local/lib
+export N_PREFIX=$HOME/local
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-alias filter_jira_tickets="sed -n 's/.*\(\[.*\]\).*/\1/p' | sort -u"
-alias get_commits_to_revert="sed 's/\[\(.*\)].*$/\\[\1\\]/g' | tr '\n' '|' | head -c -1 | sed 's/|/\\|/g' | xargs -t0 -I {} git log --pretty=format:"%h" --cherry $COMPARE_VERSION...master --grep={}"
-
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/aseeman/google-cloud-sdk/path.bash.inc' ]; then . '/home/aseeman/google-cloud-sdk/path.bash.inc'; fi
+if [ -f '/home/aseeman/OcrolusWork/bootstrap-eks/exec -l /bin/bash
+gcloud init
+gcloud auth login/google-cloud-sdk/path.bash.inc' ]; then . '/home/aseeman/OcrolusWork/bootstrap-eks/exec -l /bin/bash
+gcloud init
+gcloud auth login/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/aseeman/google-cloud-sdk/completion.bash.inc' ]; then . '/home/aseeman/google-cloud-sdk/completion.bash.inc'; fi
+if [ -f '/home/aseeman/OcrolusWork/bootstrap-eks/exec -l /bin/bash
+gcloud init
+gcloud auth login/google-cloud-sdk/completion.bash.inc' ]; then . '/home/aseeman/OcrolusWork/bootstrap-eks/exec -l /bin/bash
+gcloud init
+gcloud auth login/google-cloud-sdk/completion.bash.inc'; fi
+
+alias vim='nvim'
+alias vi='nvim'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/aseeman/OcrolusWork/ocr-ng/exec -l /bin/bash
+gcloud init
+gcloud auth login/google-cloud-sdk/path.bash.inc' ]; then . '/home/aseeman/OcrolusWork/ocr-ng/exec -l /bin/bash
+gcloud init
+gcloud auth login/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/aseeman/OcrolusWork/ocr-ng/exec -l /bin/bash
+gcloud init
+gcloud auth login/google-cloud-sdk/completion.bash.inc' ]; then . '/home/aseeman/OcrolusWork/ocr-ng/exec -l /bin/bash
+gcloud init
+gcloud auth login/google-cloud-sdk/completion.bash.inc'; fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/aseeman/OcrolusWork/audit-resourceserver/exec -l /bin/bashgcloud initgcloud auth login/google-cloud-sdk/path.bash.inc' ]; then . '/home/aseeman/OcrolusWork/audit-resourceserver/exec -l /bin/bashgcloud initgcloud auth login/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/aseeman/OcrolusWork/audit-resourceserver/exec -l /bin/bashgcloud initgcloud auth login/google-cloud-sdk/completion.bash.inc' ]; then . '/home/aseeman/OcrolusWork/audit-resourceserver/exec -l /bin/bashgcloud initgcloud auth login/google-cloud-sdk/completion.bash.inc'; fi
+

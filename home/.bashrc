@@ -118,10 +118,8 @@ if ! shopt -oq posix; then
 fi
 
 export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/OcrolusWork
 source $HOME/.local/bin/virtualenvwrapper.sh
 export JAVA_HOME=$HOME/.jdks/openjdk-14.0.1
-export MTURK_CMD_HOME=$HOME/OcrolusWork/aws-mturk-clt-1.3.1/
 
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
@@ -139,40 +137,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/aseeman/OcrolusWork/bootstrap-eks/exec -l /bin/bash
-gcloud init
-gcloud auth login/google-cloud-sdk/path.bash.inc' ]; then . '/home/aseeman/OcrolusWork/bootstrap-eks/exec -l /bin/bash
-gcloud init
-gcloud auth login/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/aseeman/OcrolusWork/bootstrap-eks/exec -l /bin/bash
-gcloud init
-gcloud auth login/google-cloud-sdk/completion.bash.inc' ]; then . '/home/aseeman/OcrolusWork/bootstrap-eks/exec -l /bin/bash
-gcloud init
-gcloud auth login/google-cloud-sdk/completion.bash.inc'; fi
-
 alias vim='nvim'
 alias vi='nvim'
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/aseeman/OcrolusWork/ocr-ng/exec -l /bin/bash
-gcloud init
-gcloud auth login/google-cloud-sdk/path.bash.inc' ]; then . '/home/aseeman/OcrolusWork/ocr-ng/exec -l /bin/bash
-gcloud init
-gcloud auth login/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/aseeman/OcrolusWork/ocr-ng/exec -l /bin/bash
-gcloud init
-gcloud auth login/google-cloud-sdk/completion.bash.inc' ]; then . '/home/aseeman/OcrolusWork/ocr-ng/exec -l /bin/bash
-gcloud init
-gcloud auth login/google-cloud-sdk/completion.bash.inc'; fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/aseeman/OcrolusWork/audit-resourceserver/exec -l /bin/bashgcloud initgcloud auth login/google-cloud-sdk/path.bash.inc' ]; then . '/home/aseeman/OcrolusWork/audit-resourceserver/exec -l /bin/bashgcloud initgcloud auth login/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/aseeman/OcrolusWork/audit-resourceserver/exec -l /bin/bashgcloud initgcloud auth login/google-cloud-sdk/completion.bash.inc' ]; then . '/home/aseeman/OcrolusWork/audit-resourceserver/exec -l /bin/bashgcloud initgcloud auth login/google-cloud-sdk/completion.bash.inc'; fi
+export USE_HUSKY=true
 

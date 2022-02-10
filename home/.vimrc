@@ -1,32 +1,41 @@
 set nocompatible              " required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Install vim-plug if we don't already have it
+if empty(glob('~/.vim/autoload/plug.vim'))
+silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-obsession'
-Plugin 'pangloss/vim-javascript'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'mxw/vim-jsx'
-Plugin 'keith/swift.vim'
-Plugin 'iCyMind/NeoSolarized'
-Plugin 'tpope/vim-jdaddy'
-Plugin 'tpope/vim-dadbod'
-Plugin 'sophacles/vim-bundle-mako'
-Plugin 'peitalin/vim-jsx-typescript'
+call plug#begin('~/.vim/plugged')
+Plug 'gmarik/Vundle.vim'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-obsession'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'mxw/vim-jsx'
+Plug 'keith/swift.vim'
+Plug 'iCyMind/NeoSolarized'
+Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-dadbod'
+Plug 'sophacles/vim-bundle-mako'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'arp242/auto_mkdir2.vim'
+Plug 'pantharshit00/vim-prisma'
+Plug 'jparise/vim-graphql'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'yasuhiroki/github-actions-yaml.vim'
+
 
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
 
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()            " required
 filetype plugin indent on    " required
 
 syntax enable
@@ -64,7 +73,24 @@ au BufNewFile,BufRead *.py
     \ set textwidth=79 |
     \ set fileformat=unix
 
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
+autocmd Filetype typescriptreact setlocal ts=2 sts=2 sw=2
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 set undofile
 set undodir=~/.vim/undodir
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+nmap <silent> gy <Plug>(coc-type-definition)
+

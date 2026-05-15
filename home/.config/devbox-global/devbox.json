@@ -1,0 +1,31 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.15.1/.schema/devbox.schema.json",
+  "packages": {
+    "jq":          "latest",
+    "cloudflared": "latest",
+    "rsync":       "latest",
+    "python": {
+      "version":        "3.12",
+      "disable_plugin": true
+    },
+    "pre-commit":                 "latest",
+    "uv":                         "latest",
+    "awscli2":                    "latest",
+    "ssm-session-manager-plugin": "latest",
+    "redis": {
+      "version":        "latest",
+      "disable_plugin": true
+    },
+    "fnm": "latest"
+  },
+  "shell": {
+    "init_hook": [
+      "echo 'Welcome to devbox!' > /dev/null"
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
+    }
+  }
+}

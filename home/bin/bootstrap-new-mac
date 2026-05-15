@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+# Restore Adam's dev environment on a fresh Mac.
+#
+# Prereqs (run by hand before this script):
+#   xcode-select --install     # wait for installer to finish
+#   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#   eval "$(/opt/homebrew/bin/brew shellenv)"
+#   brew install homeshick
+#   $HOME/.homesick/repos/homeshick/bin/homeshick clone https://github.com/aseeman/dotfiles.git
+#   $HOME/.homesick/repos/homeshick/bin/homeshick link dotfiles     # accept overwrites
+#   exec zsh                   # reload to pick up tracked .zshrc
+#   bootstrap-new-mac          # this script (now on $PATH via ~/bin/)
+
+set -euo pipefail
+
+CASTLE="$HOME/.homesick/repos/dotfiles"
+
+step() { printf "\n\033[1;36m== %s ==\033[0m\n" "$*"; }
+ok()   { printf "  \033[32m✔\033[0m %s\n" "$*"; }
+warn() { printf "  \033[33m·\033[0m %s\n" "$*"; }
+
+step "Sanity"
+[[ "$(uname)" == "Darwin" ]] || { echo "macOS only"; exit 1; }
+command -v brew >/dev/null   || { echo "Install Homebrew first (see header)"; exit 1; }
+[[ -d "$CASTLE" ]]           || { echo "Castle missing at $CASTLE"; exit 1; }
+ok "macOS $(sw_vers -productVersion) on $(uname -m); brew=$(brew --prefix)"
+
+step "Brewfile"
+brew bundle install --file="$CASTLE/home/Brewfile"
+ok "Brewfile applied"
+
+step "Rust toolchain"
+if ! command -v cargo >/dev/null 2>&1; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable --no-modify-path
+	# shellcheck disable=SC1091
+	source "$HOME/.cargo/env"
+	ok "rustup installed"
+else
+	ok "cargo present"
+fi
+
+step "uv tools"
+if command -v uv >/dev/null 2>&1; then
+	for tool in ramp-devtool dojo quorum; do
+		uv tool install "$tool" 2>&1 | grep -vE "already installed|nothing to do" || true
+	done
+	ok "uv tools installed"
+else
+	warn "uv missing — Brewfile should have installed it. Check 'brew install uv' then re-run this section."
+fi
+
+step "Devbox"
+if ! command -v devbox >/dev/null 2>&1; then
+	curl -fsSL https://get.jetify.com/devbox | bash -s -- -f
+	ok "devbox installed"
+else
+	ok "devbox present"
+fi
+devbox_src="$CASTLE/home/.config/devbox-global/devbox.json"
+devbox_dst="$HOME/.local/share/devbox/global/default/devbox.json"
+if [[ -f "$devbox_src" && ! -f "$devbox_dst" ]]; then
+	mkdir -p "$(dirname "$devbox_dst")"
+	cp "$devbox_src" "$devbox_dst"
+	ok "devbox global config restored"
+	warn "Run 'devbox global pull' to materialize packages"
+elif [[ -f "$devbox_dst" ]]; then
+	ok "devbox global config already in place"
+fi
+
+step "zshrc.local stub"
+if [[ ! -f "$HOME/.zshrc.local" ]]; then
+	cat > "$HOME/.zshrc.local" <<'EOF'
+# Machine-local zsh config. Not tracked by homeshick.
+# Set machine-specific env and secrets here.
+
+# Snowflake CLI passphrase (required by `snow` setup)
+# export PRIVATE_KEY_PASSPHRASE="..."
+EOF
+	chmod 600 "$HOME/.zshrc.local"
+	warn "Created ~/.zshrc.local — add PRIVATE_KEY_PASSPHRASE before using snow CLI"
+else
+	ok "~/.zshrc.local already exists"
+fi
+
+step "Per-repo bootstrap"
+if [[ ! -d "$HOME/code" ]]; then
+	warn "~/code missing — skipping"
+else
+	for d in "$HOME"/code/*/; do
+		name=$(basename "$d")
+		printf "  · %-30s " "$name"
+		(
+			cd "$d"
+			marks=""
+			if [[ -f devbox.json ]] && devbox install >/dev/null 2>&1; then
+				marks+="devbox "
+			fi
+			if [[ -f uv.lock ]] && uv sync --frozen --quiet >/dev/null 2>&1; then
+				marks+="uv "
+			fi
+			if [[ -f pnpm-lock.yaml ]] && command -v pnpm >/dev/null 2>&1 \
+				&& pnpm install --frozen-lockfile --silent >/dev/null 2>&1; then
+				marks+="pnpm "
+			fi
+			if [[ -f .envrc ]] && command -v direnv >/dev/null 2>&1; then
+				direnv allow . 2>/dev/null && marks+="direnv "
+			fi
+			[[ -z "$marks" ]] && marks="(nothing to do)"
+			printf "%s\n" "$marks"
+		) || printf "FAILED\n"
+	done
+fi
+
+step "Done"
+warn "Next steps:"
+warn "  1. Edit ~/.zshrc.local and set PRIVATE_KEY_PASSPHRASE"
+warn "  2. cd ~/code/<repo> && devbox shell  (per repo, as needed)"
+warn "  3. Push pending dotfiles commits if any: (cd $CASTLE && git push)"

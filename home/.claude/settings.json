@@ -1,0 +1,93 @@
+{
+    "model": "opus",
+    "hooks": {
+        "SessionStart": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "bash $HOME/.config/dojo/hooks/cc-session-id.sh"
+                    }
+                ]
+            },
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python3 $HOME/.config/dojo/hooks/skill-telemetry.py"
+                    }
+                ]
+            },
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python3 $HOME/.config/dojo/hooks/skill-telemetry-shipper.py",
+                        "async": true
+                    }
+                ]
+            }
+        ],
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python3 $HOME/.config/dojo/hooks/skill-telemetry.py"
+                    }
+                ]
+            },
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python3 $HOME/.config/dojo/hooks/skill-suggester.py"
+                    }
+                ]
+            }
+        ],
+        "SessionEnd": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python3 $HOME/.config/dojo/hooks/skill-telemetry.py"
+                    }
+                ]
+            }
+        ],
+        "SubagentStop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python3 $HOME/.config/dojo/hooks/skill-telemetry.py"
+                    }
+                ]
+            }
+        ],
+        "UserPromptSubmit": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python3 $HOME/.config/dojo/hooks/skill-suggester.py"
+                    }
+                ]
+            }
+        ],
+        "SubagentStart": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "bash $HOME/.config/dojo/hooks/capture-subagent-info.sh"
+                    }
+                ]
+            }
+        ]
+    },
+    "alwaysThinkingEnabled": true,
+    "skipDangerousModePermissionPrompt": true,
+    "skipAutoPermissionPrompt": true
+}

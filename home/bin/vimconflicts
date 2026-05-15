@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+files=$(git diff --name-only --diff-filter=U)
+
+if [ -z "$files" ]; then
+	echo "No merge conflicts to resolve." >&2
+	exit 0
+fi
+
+# shellcheck disable=SC2086
+exec vim -p $files
